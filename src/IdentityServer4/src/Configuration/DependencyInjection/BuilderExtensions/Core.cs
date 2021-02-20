@@ -77,19 +77,20 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IIdentityServerBuilder AddDefaultEndpoints(this IIdentityServerBuilder builder)
         {
             builder.Services.AddTransient<IEndpointRouter, EndpointRouter>();
-
-            builder.AddEndpoint<AuthorizeCallbackEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.AuthorizeCallback.EnsureLeadingSlash());
-            builder.AddEndpoint<AuthorizeEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Authorize.EnsureLeadingSlash());
-            builder.AddEndpoint<CheckSessionEndpoint>(EndpointNames.CheckSession, ProtocolRoutePaths.CheckSession.EnsureLeadingSlash());
-            builder.AddEndpoint<DeviceAuthorizationEndpoint>(EndpointNames.DeviceAuthorization, ProtocolRoutePaths.DeviceAuthorization.EnsureLeadingSlash());
-            builder.AddEndpoint<DiscoveryKeyEndpoint>(EndpointNames.Discovery, ProtocolRoutePaths.DiscoveryWebKeys.EnsureLeadingSlash());
-            builder.AddEndpoint<DiscoveryEndpoint>(EndpointNames.Discovery, ProtocolRoutePaths.DiscoveryConfiguration.EnsureLeadingSlash());
-            builder.AddEndpoint<EndSessionCallbackEndpoint>(EndpointNames.EndSession, ProtocolRoutePaths.EndSessionCallback.EnsureLeadingSlash());
-            builder.AddEndpoint<EndSessionEndpoint>(EndpointNames.EndSession, ProtocolRoutePaths.EndSession.EnsureLeadingSlash());
-            builder.AddEndpoint<IntrospectionEndpoint>(EndpointNames.Introspection, ProtocolRoutePaths.Introspection.EnsureLeadingSlash());
-            builder.AddEndpoint<TokenRevocationEndpoint>(EndpointNames.Revocation, ProtocolRoutePaths.Revocation.EnsureLeadingSlash());
-            builder.AddEndpoint<TokenEndpoint>(EndpointNames.Token, ProtocolRoutePaths.Token.EnsureLeadingSlash());
-            builder.AddEndpoint<UserInfoEndpoint>(EndpointNames.UserInfo, ProtocolRoutePaths.UserInfo.EnsureLeadingSlash());
+            var options = builder.Services.BuildServiceProvider().GetService<IdentityServerOptions>();
+            string customRoutePrefix = options.CustomRoutePrefix ?? "";
+            builder.AddEndpoint<AuthorizeCallbackEndpoint>(EndpointNames.Authorize, (customRoutePrefix + ProtocolRoutePaths.AuthorizeCallback).EnsureLeadingSlash());
+            builder.AddEndpoint<AuthorizeEndpoint>(EndpointNames.Authorize, (customRoutePrefix + ProtocolRoutePaths.Authorize).EnsureLeadingSlash());
+            builder.AddEndpoint<CheckSessionEndpoint>(EndpointNames.CheckSession, (customRoutePrefix + ProtocolRoutePaths.CheckSession).EnsureLeadingSlash());
+            builder.AddEndpoint<DeviceAuthorizationEndpoint>(EndpointNames.DeviceAuthorization, (customRoutePrefix + ProtocolRoutePaths.DeviceAuthorization).EnsureLeadingSlash());
+            builder.AddEndpoint<DiscoveryKeyEndpoint>(EndpointNames.Discovery, (customRoutePrefix + ProtocolRoutePaths.DiscoveryWebKeys).EnsureLeadingSlash());
+            builder.AddEndpoint<DiscoveryEndpoint>(EndpointNames.Discovery, (customRoutePrefix + ProtocolRoutePaths.DiscoveryConfiguration).EnsureLeadingSlash());
+            builder.AddEndpoint<EndSessionCallbackEndpoint>(EndpointNames.EndSession, (customRoutePrefix + ProtocolRoutePaths.EndSessionCallback).EnsureLeadingSlash());
+            builder.AddEndpoint<EndSessionEndpoint>(EndpointNames.EndSession, (customRoutePrefix + ProtocolRoutePaths.EndSession).EnsureLeadingSlash());
+            builder.AddEndpoint<IntrospectionEndpoint>(EndpointNames.Introspection, (customRoutePrefix + ProtocolRoutePaths.Introspection).EnsureLeadingSlash());
+            builder.AddEndpoint<TokenRevocationEndpoint>(EndpointNames.Revocation, (customRoutePrefix + ProtocolRoutePaths.Revocation).EnsureLeadingSlash());
+            builder.AddEndpoint<TokenEndpoint>(EndpointNames.Token, (customRoutePrefix + ProtocolRoutePaths.Token).EnsureLeadingSlash());
+            builder.AddEndpoint<UserInfoEndpoint>(EndpointNames.UserInfo, (customRoutePrefix + ProtocolRoutePaths.UserInfo).EnsureLeadingSlash());
 
             return builder;
         }

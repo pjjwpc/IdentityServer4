@@ -135,5 +135,10 @@ namespace IdentityServer4.Configuration
         /// Gets or sets the mutual TLS options.
         /// </summary>
         public MutualTlsOptions MutualTls { get; set; } = new MutualTlsOptions();
+
+        /// <summary>
+        /// 自定义路由前缀
+        /// </summary>
+        public string CustomRoutePrefix { get; set; } = string.Empty;
     }
 }
